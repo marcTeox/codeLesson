@@ -15,14 +15,7 @@ function updatePriceAndTime() {
   const newPrice = stockData.price;
   const priceDiff = differenceInPrice(oldPrice, newPrice);
   oldPrice = newPrice;
-  let icon = "";
-  if (priceDiff > 0) {
-    icon = "▲";
-  } else if (priceDiff < 0) {
-    icon = "▼";
-  } else {
-    icon = "➡️";
-  }
+  let icon = priceDiff > 0 ? "▲" : priceDiff < 0 ? "▼" : "➡️";
   priceElement.textContent = `Price: $${stockData.price} ${icon}`;
   timeElement.textContent = `Time: ${stockData.time()}`;
 }
