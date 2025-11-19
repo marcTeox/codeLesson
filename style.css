@@ -1,0 +1,53 @@
+/* card as a column using flex; top area (image) ~40% of card height */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.08);
+  padding: 18px;
+  width: 340px;
+  min-width: 220px;
+  height: 360px; /* controls the image height (40% of this) */
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+
+  /* space around each card container */
+  margin: 12px;
+}
+
+/* if the image is a direct child of .card, make it the top block ~40% */
+.card > img {
+  flex: 0 0 40%; /* occupy ~40% of card height and don't grow */
+  width: 100%;
+  height: 100%; /* fill the image's flex area */
+  object-fit: cover; /* crop to cover while preserving look */
+  aspect-ratio: 16 / 9; /* keep landscape ratio */
+  border-radius: 8px 8px 0 0;
+  display: block;
+}
+
+/* keep actions pinned to bottom of content area */
+.card .actions {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* responsive: stack as column on very small screens (image becomes natural height) */
+@media (max-width: 420px) {
+  .card {
+    width: 100%;
+    height: auto;
+    margin: 10px 0; /* slightly different spacing on very small screens */
+  }
+  .card > img {
+    flex: 0 0 auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+  }
+}
