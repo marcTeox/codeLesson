@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+  color: #333;
+}
+
+.container {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+#prompt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#prompt-input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  font-size: 1rem;
+  background: #4a7dfc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+button:hover {
+  background: #3a67d6;
+}
+
+#output {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f8ff;
+  border-radius: 6px;
+  min-height: 50px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+}
