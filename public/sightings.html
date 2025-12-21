@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <style>
+      :root {
+        --accent: #a84dff;
+        --accent-soft: rgba(168, 77, 255, 0.12);
+      }
+
+      body {
+        background: radial-gradient(
+            circle at 10% 10%,
+            rgba(168, 77, 255, 0.02),
+            transparent
+          ),
+          #08080a;
+        color: #e6e6e6;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        margin: 0;
+        padding: 24px;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      /* original card visual (kept for any existing .card elements) */
+      .card {
+        position: relative;
+        padding: 20px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #0f0f12 0%, #19161d 100%);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 10px 30px rgba(2, 2, 8, 0.7), 0 0 18px var(--accent-soft);
+        overflow: hidden;
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+        min-height: 120px;
+      }
+
+      /* ghostly fog / subtle spectral sheen */
+      .card::before {
+        content: "";
+        position: absolute;
+        left: -10%;
+        top: -30%;
+        width: 120%;
+        height: 70%;
+        background: radial-gradient(
+            30% 40% at 10% 20%,
+            rgba(255, 255, 255, 0.02),
+            transparent 15%
+          ),
+          radial-gradient(
+            50% 60% at 90% 80%,
+            rgba(168, 77, 255, 0.02),
+            transparent 20%
+          );
+        transform: rotate(-8deg);
+        mix-blend-mode: screen;
+        pointer-events: none;
+        animation: floatFog 6s linear infinite;
+      }
+
+      .card::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(168, 77, 255, 0.06),
+          transparent
+        );
+      }
+
+      .card h2 {
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+        color: #f6f3ff;
+        text-shadow: 0 0 10px rgba(168, 77, 255, 0.12);
+        letter-spacing: 0.6px;
+      }
+
+      .card p {
+        margin: 0;
+        color: #dcdcdc;
+        opacity: 0.92;
+        line-height: 1.4;
+        font-size: 0.95rem;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+      }
+
+      .card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 18px 50px rgba(2, 2, 8, 0.8),
+          0 0 40px rgba(168, 77, 255, 0.14);
+      }
+
+      @keyframes floatFog {
+        0% {
+          transform: translateY(0) rotate(-8deg);
+        }
+        50% {
+          transform: translateY(-6px) rotate(-6deg);
+        }
+        100% {
+          transform: translateY(0) rotate(-8deg);
+        }
+      }
+
+      .card.example {
+        opacity: 0.95;
+      }
+
+      /* ------------------------------
+     Styles for JS-rendered sighting cards
+     ------------------------------ */
+
+      /* Visual style for each sighting card — matches the original .card look */
+      .sighting-card {
+        position: relative;
+        padding: 18px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #0f0f12 0%, #19161d 100%);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 10px 30px rgba(2, 2, 8, 0.7), 0 0 18px var(--accent-soft);
+        overflow: hidden;
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .sighting-card::before {
+        content: "";
+        position: absolute;
+        left: -10%;
+        top: -30%;
+        width: 120%;
+        height: 70%;
+        background: radial-gradient(
+            30% 40% at 10% 20%,
+            rgba(255, 255, 255, 0.02),
+            transparent 15%
+          ),
+          radial-gradient(
+            50% 60% at 90% 80%,
+            rgba(168, 77, 255, 0.02),
+            transparent 20%
+          );
+        transform: rotate(-8deg);
+        mix-blend-mode: screen;
+        pointer-events: none;
+        animation: floatFog 6s linear infinite;
+      }
+
+      .sighting-card h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: #f6f3ff;
+        letter-spacing: 0.4px;
+        text-shadow: 0 0 8px rgba(168, 77, 255, 0.08);
+      }
+
+      .sighting-card .card-details {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #bfbfbf;
+        opacity: 0.9;
+      }
+
+      /* Collapsible text wrapper:
+     - default: collapsed to roughly 3 lines (adjust max-height as needed)
+     - when the parent article has .expanded -> reveal fully via large max-height
+     Note: transitioning max-height gives a smooth expand/collapse feel.
+  */
+      .sighting-text-wrapper {
+        overflow: hidden;
+        max-height: 4.5rem; /* ~3 lines depending on font-size/line-height */
+        transition: max-height 280ms cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+
+      /* The text itself styling */
+      .sighting-text {
+        margin: 0;
+        color: #dcdcdc;
+        line-height: 1.5;
+        font-size: 0.95rem;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+        white-space: pre-wrap;
+      }
+
+      /* Expanded state (toggle this class on the article to expand) */
+      .sighting-card.expanded .sighting-text-wrapper {
+        max-height: 1000px; /* large enough to reveal full text */
+      }
+
+      /* Read more button */
+      .read-more-btn {
+        align-self: start;
+        background: transparent;
+        border: 1px solid rgba(168, 77, 255, 0.18);
+        color: #e9e3ff;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 180ms ease, transform 120ms ease,
+          box-shadow 180ms ease;
+        box-shadow: 0 4px 14px rgba(168, 77, 255, 0.04);
+      }
+
+      .read-more-btn:hover {
+        background: rgba(168, 77, 255, 0.04);
+        transform: translateY(-2px);
+      }
+
+      .read-more-btn:active {
+        transform: translateY(0);
+      }
+
+      /* When a card is expanded make the card pop */
+      .sighting-card.expanded {
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 18px 50px rgba(2, 2, 8, 0.8),
+          0 0 40px rgba(168, 77, 255, 0.14);
+      }
+
+      /* Small responsive tweaks */
+      @media (max-width: 420px) {
+        .sighting-card {
+          padding: 14px;
+        }
+        .sighting-text-wrapper {
+          max-height: 5rem;
+        }
+      }
+    </style>
+    <header>
+      <div>
+        <img src="./images/ghost-bg-1.png" alt="Ghost logo" />
+        <a href="/">
+          <h1>FROM THE OTHER SIDE</h1>
+        </a>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="sightings.html">Read</a></li>
+          <li><a href="upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="cards-container"></div>
+    </main>
+
+    <footer>© From The Other Side. All rights reserved.</footer>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

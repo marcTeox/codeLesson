@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Add Sighting — FROM THE OTHER SIDE</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <img src="./images/ghost-bg-1.png" alt="Ghost logo" />
+        <a href="/">
+          <h1>FROM THE OTHER SIDE</h1>
+        </a>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="sightings.html">Read</a></li>
+          <li><a href="upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Add Sighting</h1>
+
+      <form id="myForm">
+        <div>
+          <label for="title">Title</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            value="A ghostly encounter"
+            required
+          />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="timestamp">Time / Date</label>
+            <input
+              id="timestamp"
+              name="timestamp"
+              type="text"
+              placeholder="dd/mm/yyyy, --:--"
+              aria-describedby="dt-hint"
+            />
+            <div id="dt-hint" class="hint">
+              Format example: 31/10/2023, 23:45
+            </div>
+          </div>
+
+          <div>
+            <label for="location">Location</label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              value="London, UK"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="text">Details</label>
+          <textarea id="text" name="text" rows="6">
+I was trying to get to sleep when ...</textarea
+          >
+        </div>
+
+        <div>
+          <button type="submit">Submit Sighting</button>
+        </div>
+      </form>
+      <p id="status"></p>
+    </main>
+
+    <script>
+      const form = document.querySelector("#myForm");
+      const statusID = document.querySelector("#status");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const res = await fetch("/api", {
+          method: "POST",
+          body: new URLSearchParams(formData),
+        });
+
+        const data = await res.json();
+        statusID.textContent = "Saved Successfully!";
+      });
+    </script>
+  </body>
+</html>

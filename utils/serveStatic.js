@@ -1,6 +1,7 @@
 import path from "node:path";
 
 export function serveStatic(baseDir) {
-  const staticDir = path.join(baseDir, "public", "index.html");
-  return staticDir;
+  const publicDir = path.join(baseDir, "public");
+
+  return publicDir;
 }

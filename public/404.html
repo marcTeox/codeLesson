@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 — Page Not Found</title>
+  <style>
+    :root{
+      --bg:#0b0b10;
+      --fog:#13121a;
+      --accent:#ff6b00;
+      --muted:#bfb8c6;
+      --ghost:#e9eef8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,107,0,0.03), transparent 10%),
+        linear-gradient(180deg, #07060a 0%, var(--bg) 50%, #0a0a0f 100%);
+      color:var(--muted);
+      overflow:hidden;
+    }
+
+    /* spooky fog layers */
+    .fog{
+      position:fixed;
+      inset:0;
+      background:
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400"><g opacity="0.06" fill="%23ffffff"><ellipse cx="200" cy="100" rx="220" ry="60"/><ellipse cx="600" cy="260" rx="300" ry="80"/></g></svg>') repeat-x;
+      background-size: 800px 400px;
+      animation: drift 40s linear infinite;
+      pointer-events:none;
+      mix-blend-mode:screen;
+      opacity:.6;
+      filter: blur(20px);
+    }
+    @keyframes drift{
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .scene{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:3rem 1rem;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      max-width:880px;
+      width:100%;
+      padding:3rem;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      box-shadow: 0 10px 40px rgba(2,2,5,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;
+      overflow:visible;
+    }
+
+    h1{
+      margin:0 0 .4rem;
+      font-size:clamp(2.6rem, 8vw, 6rem);
+      line-height:0.9;
+      letter-spacing:-0.02em;
+      color:var(--ghost);
+      text-shadow:
+        0 0 25px rgba(255,107,0,0.08),
+        0 6px 24px rgba(0,0,0,0.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:1rem;
+    }
+
+    /* dripping effect under numbers */
+    .drip{
+      position:relative;
+      display:inline-block;
+    }
+    .drip::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:-10px;
+      width:6px;
+      height:24px;
+      background:linear-gradient(180deg,var(--accent), #ffa95a);
+      border-radius:3px;
+      box-shadow:0 6px 12px rgba(255,107,0,0.12);
+      animation: drip 2.2s linear infinite;
+      opacity:.95;
+    }
+    .drip:nth-child(2)::after{ left:62%; animation-delay:.33s; height:16px }
+    .drip:nth-child(3)::after{ left:38%; animation-delay:.66s; height:20px }
+    @keyframes drip{
+      0%{ transform:translateX(-50%) scaleY(0.2); opacity:0 }
+      60%{ transform:translateX(-50%) scaleY(1); opacity:1 }
+      100%{ transform:translateX(-50%) scaleY(0.2); opacity:0 }
+    }
+
+    p.lead{
+      margin:1rem 0 1.6rem;
+      font-size:1.05rem;
+      color: #d6cfdb;
+      opacity:.95;
+    }
+
+    .cta{
+      display:inline-block;
+      padding:.75rem 1.25rem;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),#ff944d);
+      color:#111;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 8px 24px rgba(255,107,0,0.12);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:hover{ transform:translateY(-4px); box-shadow:0 18px 36px rgba(255,107,0,0.16) }
+
+    /* bats */
+    .bat{
+      position:absolute;
+      width:60px;
+      height:40px;
+      left:10%;
+      top:12%;
+      transform-origin:center;
+      opacity:.95;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.6));
+    }
+    .bat svg{ width:100%; height:100%; fill:#111; stroke:#211721; stroke-width:1; }
+    .bat.b1{ left:8%; top:10%; animation: fly1 8s linear infinite; transform:scale(.9) }
+    .bat.b2{ left:75%; top:8%; animation: fly2 10s linear infinite; transform:scale(.7) }
+    .bat.b3{ left:60%; top:24%; animation: fly3 12s linear infinite; transform:scale(.85) }
+
+    @keyframes fly1{
+      0%{ transform:translateX(0) translateY(0) rotate(0) }
+      50%{ transform:translateX(220px) translateY(-40px) rotate(-10deg) }
+      100%{ transform:translateX(0) translateY(0) rotate(0) }
+    }
+    @keyframes fly2{
+      0%{ transform:translateX(0) translateY(0) rotate(0) }
+      50%{ transform:translateX(-300px) translateY(20px) rotate(10deg) }
+      100%{ transform:translateX(0) translateY(0) rotate(0) }
+    }
+    @keyframes fly3{
+      0%{ transform:translateX(0) translateY(0) rotate(0) }
+      50%{ transform:translateX(-150px) translateY(-80px) rotate(-6deg) }
+      100%{ transform:translateX(0) translateY(0) rotate(0) }
+    }
+
+    /* little ghost */
+    .ghost{
+      width:110px;
+      height:120px;
+      margin:0 auto .6rem;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100%{ transform:translateY(0) }
+      50%{ transform:translateY(-18px) }
+    }
+    .ghost svg{ width:100%; height:100%; display:block; }
+
+    footer{
+      margin-top:1.6rem;
+      font-size:.9rem;
+      color:#a7a0aa;
+      opacity:.85;
+    }
+
+    @media (max-width:520px){
+      .card{ padding:2rem }
+      p.lead{ font-size:.98rem; }
+      .bat{ display:none }
+      .ghost{ width:88px; height:96px }
+    }
+  </style>
+</head>
+<body>
+  <div class="fog" aria-hidden="true"></div>
+
+  <main class="scene" role="main">
+    <div class="card" aria-labelledby="title">
+      <div class="bat b1" aria-hidden="true">
+        <svg viewBox="0 0 64 40" preserveAspectRatio="xMidYMid meet" role="img"><path d="M2 22c8 0 8-8 16-8s8 8 16 8 8-8 16-8c-7-6-9-4-16-4S26 8 18 6 6 12 2 22z"/></svg>
+      </div>
+      <div class="bat b2" aria-hidden="true">
+        <svg viewBox="0 0 64 40" preserveAspectRatio="xMidYMid meet" role="img"><path d="M2 22c8 0 8-8 16-8s8 8 16 8 8-8 16-8c-7-6-9-4-16-4S26 8 18 6 6 12 2 22z"/></svg>
+      </div>
+      <div class="bat b3" aria-hidden="true">
+        <svg viewBox="0 0 64 40" preserveAspectRatio="xMidYMid meet" role="img"><path d="M2 22c8 0 8-8 16-8s8 8 16 8 8-8 16-8c-7-6-9-4-16-4S26 8 18 6 6 12 2 22z"/></svg>
+      </div>
+
+      <div class="ghost" aria-hidden="true">
+        <svg viewBox="0 0 120 140" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.98"/>
+              <stop offset="1" stop-color="#dfe9ff" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+          <path d="M60 6c-22 0-36 18-36 42v62c0 4 3 6 6 6 4 0 7-2 10-2 5 0 8 4 14 4s9-4 14-4c4 0 7 2 11 2 3 0 6-2 6-6V48C96 24 82 6 60 6z" fill="url(#g)"/>
+          <circle cx="46" cy="52" r="6" fill="#111" opacity=".95"/>
+          <circle cx="74" cy="52" r="6" fill="#111" opacity=".95"/>
+          <path d="M52 72c6 4 10 4 16 0" stroke="#111" stroke-width="3" stroke-linecap="round" fill="none" opacity=".9"/>
+        </svg>
+      </div>
+
+      <h1 id="title" aria-hidden="false">
+        <span class="drip">4</span>
+        <span class="drip">0</span>
+        <span class="drip">4</span>
+      </h1>
+
+      <p class="lead">This page has vanished into the mist. The link might be broken or the page may no longer exist.</p>
+
+      <p>
+        <a class="cta" href="/" title="Return home">Return Home</a>
+      </p>
+
+      <footer>
+        Tip: Check the URL or head back to safety. — Haunted Server
+      </footer>
+    </div>
+  </main>
+</body>
+</html></div>
