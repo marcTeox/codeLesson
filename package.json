@@ -8,5 +8,8 @@
     "start": "nodemon server.js"
   },
   "author": "Marc Teox",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "sanitize-html": "^2.17.0"
+  }
 }
